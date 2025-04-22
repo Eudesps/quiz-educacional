@@ -41,12 +41,16 @@ function App() {
 
           {current < questions.length ? (
             <>
-              <Question
-                questionData={questions[current]}
-                onAnswer={handleAnswer}
-                selected={selected}
-                answered={answered}
-              />
+              <div
+                className="question-wrapper"
+              >
+                <Question
+                  questionData={questions[current]}
+                  onAnswer={handleAnswer}
+                  selected={selected}
+                  answered={answered}
+                />
+              </div>
 
               <button onClick={next} disabled={!answered}>Próxima</button>
             </>

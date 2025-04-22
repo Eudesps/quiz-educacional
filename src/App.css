@@ -1,113 +1,126 @@
+:root {
+  --pink: #ef476f;
+  --yellow: #ffd166;
+  --green: #06d6a0;
+  --blue: #118ab2;
+  --dark-blue: #073b4c;
+
+  /* Gradientes removidos */
+  --bg-gradient: #fefae0;
+  --box-background: #073b4c;
+}
+
 .App {
-  font-family: sans-serif;
-  background-color: #00000039;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fefae0;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.quiz-box {
-  background: #413b50;
+.quiz-box, .intro-box {
+  background-color: var(--box-background);
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 20px;
   width: 90%;
   max-width: 600px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  color: #fff;
+  animation: scaleIn 0.5s ease-out;
 }
 
-.options button {
+.quiz-title {
+  color: var(--yellow);
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  animation: fadeInUp 1s ease-out;
+}
+
+.options .option-btn {
   width: 100%;
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+  margin: 8px 0;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: none;
+  background-color: #8ecae6;
+  color: #023047;
+  font-weight: 500;
   cursor: pointer;
-  text-align: left;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.options .option-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 
 .correct {
-  background-color: #0d4d25;
+  background-color: #06d6a0 !important;
+  color: #ffffff !important;
+  font-weight: bold;
+  border: 2px solid #03a57c;
 }
 
 .wrong {
-  background-color: #4e1217;
+  background-color: #ef476f !important;
+  color: #ffffff !important;
+  font-weight: bold;
+  border: 2px solid #b30021;
 }
 
-
 button {
-  background-color: #6200ea;
-  color: white;
+  background-color: var(--green);
+  color: rgb(0, 0, 0);
   border: none;
-  padding: 12px 20px;
+  padding: 14px 22px;
   font-size: 16px;
-  border-radius: 8px;
+  font-weight: bold;
+  border-radius: 12px;
   cursor: pointer;
-  margin-top: 15px;
-  transition: background 0.3s;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
 }
 
 button:hover {
-  background-color: #413b50;
+  filter: brightness(1.1);
 }
 
 button:disabled {
-  background-color: #444;
+  background-color: #888;
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
 p {
   font-size: 18px;
   text-align: center;
+  color: #ffffffdd;
 }
 
-.options button {
-  width: 100%;
-  text-align: left;
-  background-color: #2a2a2a;
-  margin-bottom: 10px;
-  border: 1px solid #333;
-  transition: background 0.3s;
-}
-
-.options button:hover {
-  background-color: #333;
-}
-
-.intro-box {
-  background: #413b50;
-  padding: 40px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 500px;
+.result-screen {
   text-align: center;
-  animation: scaleIn 0.8s ease-out;
+  padding: 25px;
+  background-color: #118ab2;
+  border-radius: 16px;
+  margin-top: 20px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-.quiz-title {
-  color: #ffffff;
-  font-size: 36px;
+.result-screen h2 {
+  color: #ffd166;
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+.result-screen p {
+  font-size: 20px;
+  color: #06d6a0;
   margin-bottom: 20px;
-  animation: fadeInUp 1s ease-out;.result-screen {
-    text-align: center;
-    padding: 20px;
-    background-color: #2f2f2f;
-    border-radius: 10px;
-    margin-top: 20px;
-  }
-  
-  .result-screen h2 {
-    color: #fff;
-    font-size: 28px;
-    margin-bottom: 10px;
-  }
-  
-  .result-screen p {
-    font-size: 20px;
-    color: #ccc;
-    margin-bottom: 20px;
-  }
-  
 }
 
 @keyframes fadeInUp {
@@ -123,7 +136,7 @@ p {
 
 @keyframes scaleIn {
   from {
-    transform: scale(0.8);
+    transform: scale(0.9);
     opacity: 0;
   }
   to {
@@ -132,23 +145,8 @@ p {
   }
 }
 
-.result-screen {
-  text-align: center;
-  padding: 20px;
-  background-color: #2f2f2f;
-  border-radius: 10px;
-  margin-top: 20px;
+.question-wrapper {
+  background: rgb(169, 49, 49);
+  border-radius: 1rem;
+  color: #283618;
 }
-
-.result-screen h2 {
-  color: #fff;
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-.result-screen p {
-  font-size: 20px;
-  color: #ccc;
-  margin-bottom: 20px;
-}
-

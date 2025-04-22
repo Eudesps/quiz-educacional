@@ -5,14 +5,13 @@
   --blue: #118ab2;
   --dark-blue: #073b4c;
 
-  /* Gradientes removidos */
   --bg-gradient: #fefae0;
   --box-background: #073b4c;
 }
 
 .App {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #fefae0;
+  background-color: #073b4c;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -104,7 +103,7 @@ p {
 .result-screen {
   text-align: center;
   padding: 25px;
-  background-color: #118ab2;
+  background-color: #073b4c;
   border-radius: 16px;
   margin-top: 20px;
   color: #fff;

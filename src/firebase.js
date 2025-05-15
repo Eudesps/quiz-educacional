@@ -10,8 +10,9 @@ import {
   orderBy,
   limit,
   getDocs,
-  where, // Importa where
-  updateDoc, // Importa updateDoc
+  where,
+  updateDoc,
+  doc
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -27,9 +28,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Salva a pontuação do usuário
+// Salva ou atualiza a pontuação do usuário
 const salvarPontuacao = async (usuario, pontos) => {
- try {
+  try {
     const pontuacoesRef = collection(db, 'pontuacoes');
     const q = query(pontuacoesRef, where('usuario', '==', usuario));
     const snapshot = await getDocs(q);
@@ -44,16 +45,17 @@ const salvarPontuacao = async (usuario, pontos) => {
       console.log("Pontuação salva com ID: ", docRef.id);
     } else {
       // Se já existe uma pontuação, atualiza apenas se a nova for maior
-      snapshot.forEach(async (doc) => {
-        const pontuacaoExistente = doc.data().pontos;
+      snapshot.forEach(async (docSnap) => {
+        const docRef = doc(db, 'pontuacoes', docSnap.id);
+        const pontuacaoExistente = docSnap.data().pontos;
         if (pontos > pontuacaoExistente) {
-          await updateDoc(doc.ref, {
+          await updateDoc(docRef, {
             pontos: pontos,
             data: new Date(), // Atualiza a data da melhor pontuação
           });
           console.log("Pontuação atualizada para o usuário: ", usuario);
         } else {
-           console.log("Pontuação existente é maior, não atualizando: ", usuario);
+          console.log("Pontuação existente é maior, não atualizando: ", usuario);
         }
       });
     }
@@ -65,24 +67,59 @@ const salvarPontuacao = async (usuario, pontos) => {
 // Busca as 10 melhores pontuações
 const buscarTopPontuacoes = async () => {
   try {
-        const q = query(
-            collection(db, 'pontuacoes'),
-            orderBy('pontos', 'desc'),
-            orderBy('data', 'asc'), // Em caso de empate
-            limit(10)
-        );
-        const snapshot = await getDocs(q);
-        const data = snapshot.docs.map(doc => ({
-            id: doc.id,
-            usuario: doc.data().usuario, // Garante que o nome do usuário seja incluído
-            pontos: doc.data().pontos
-        }));
-        console.log("Dados retornados do Firestore:", data);
-        return data;
-    } catch (e) {
-        console.error('Erro ao buscar ranking:', e);
-        return [];
-    }
+    const q = query(
+      collection(db, 'pontuacoes'),
+      orderBy('pontos', 'desc'),
+      orderBy('data', 'asc'), // Em caso de empate
+      limit(10)
+    );
+    const snapshot = await getDocs(q);
+    const data = snapshot.docs.map(doc => ({
+      id: doc.id,
+      usuario: doc.data().usuario, // Garante que o nome do usuário seja incluído
+      pontos: doc.data().pontos
+    }));
+    console.log("Dados retornados do Firestore:", data);
+    return data;
+  } catch (e) {
+    console.error('Erro ao buscar ranking:', e);
+    return [];
+  }
 };
 
-export { app, auth, db, salvarPontuacao, buscarTopPontuacoes };
+// Salva o histórico de jogadas do usuário
+const salvarHistorico = async (usuario, pontos) => { // Modificado para receber apenas a pontuação
+  try {
+    await addDoc(collection(db, 'historico'), {
+      usuario,
+      pontos,
+      data: new Date().toLocaleString(), // Salva a data e hora como string
+    });
+    console.log("Pontuação salva no histórico para o usuário: ", usuario);
+  } catch (error) {
+    console.error("Erro ao salvar jogada no histórico:", error);
+  }
+};
+
+// Busca o histórico de jogadas do usuário
+const buscarHistorico = async (usuario) => {
+  try {
+    const q = query(
+      collection(db, 'historico'),
+      where('usuario', '==', usuario),
+      orderBy('data', 'desc') // Ordena por data decrescente (mais recente primeiro)
+    );
+    const snapshot = await getDocs(q);
+    const historicoData = snapshot.docs.map(doc => ({
+        pontos: doc.data().pontos,
+        data: doc.data().data
+    }));
+    console.log("Histórico de jogadas recuperado para o usuário: ", usuario, historicoData);
+    return historicoData;
+  } catch (error) {
+    console.error("Erro ao buscar histórico de jogadas:", error);
+    return [];
+  }
+};
+
+export { app, auth, db, salvarPontuacao, buscarTopPontuacoes, salvarHistorico, buscarHistorico };

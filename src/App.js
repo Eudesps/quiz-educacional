@@ -1,12 +1,10 @@
-//src/App.js
-
 import React, { useState } from 'react';
 import questions from './data/questions';
 import Question from './components/Question';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Ranking from './components/Ranking';
-import { salvarPontuacao, buscarTopPontuacoes } from './firebase';
+import { salvarPontuacao, buscarTopPontuacoes, salvarHistorico, buscarHistorico } from './firebase';
 import './App.css';
 
 function App() {
@@ -18,11 +16,14 @@ function App() {
   const [showIntro, setShowIntro] = useState(true);
   const [ranking, setRanking] = useState([]);
   const [tela, setTela] = useState('inicio'); // 'inicio', 'quiz', 'ranking', 'historico'
+  const [historico, setHistorico] = useState([]); // Novo estado para armazenar o histórico
+  const [quizFinalizado, setQuizFinalizado] = useState(false); // Novo estado para controlar se o quiz terminou
 
   const handleAnswer = (index) => {
     setSelected(index);
     setAnswered(true);
-    if (index === questions[current].correct) {
+    const isCorrect = index === questions[current].correct;
+    if (isCorrect) {
       setScore(score + 1);
     }
   };
@@ -36,6 +37,7 @@ function App() {
   const startQuiz = () => {
     setShowIntro(false);
     setTela('quiz');
+    setQuizFinalizado(false); // Reinicia o estado ao iniciar o quiz
   };
 
   const handleLogin = (user) => {
@@ -51,11 +53,12 @@ function App() {
   };
 
   const finalizarQuiz = () => {
-    console.log("finalizarQuiz chamado");
     if (usuario) {
       salvarPontuacao(usuario.email, score);
+      salvarHistorico(usuario.email, score); // Salva a pontuação final
     }
     setTela('inicio');
+    setQuizFinalizado(true); // Define o estado para indicar que o quiz terminou
   };
 
   const navegar = async (novaTela) => {
@@ -66,10 +69,20 @@ function App() {
       setRanking(top);
     }
 
+    if (novaTela === 'historico') {
+      // Busca o histórico do usuário ao navegar para a tela de histórico
+      if (usuario) {
+        const historicoData = await buscarHistorico(usuario.email);
+        setHistorico(historicoData);
+      }
+    }
+
+
     if (novaTela === 'inicio') {
       setShowIntro(true);
       setCurrent(0);
       setScore(0);
+      setQuizFinalizado(false); // Reinicia o estado ao voltar para o início
     }
   };
 
@@ -82,6 +95,24 @@ function App() {
       <Navbar onLogout={handleLogout} onNavegar={navegar} />
 
       {tela === 'ranking' && <Ranking rankingData={ranking} />}
+
+      {tela === 'historico' && (
+        <div className="quiz-box">
+          <h1 className="quiz-title">Histórico de Pontuações</h1> {/* Título atualizado */}
+          {historico.length > 0 ? (
+            <ol>
+              {historico.map((jogada, index) => (
+                <li key={index}>
+                  {/* Exibe apenas a pontuação e a data */}
+                  <p><strong>Pontuação:</strong> {jogada.pontos} - {jogada.data}</p>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p>Você ainda não possui histórico de jogadas.</p>
+          )}
+        </div>
+      )}
 
       {tela === 'inicio' && showIntro && (
         <div className="intro-box">

@@ -15,12 +15,12 @@ import {
 } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDf_jxoeQnuo1PNuV6zKoGbJRRoCJOvXKI",
-  authDomain: "quizz-418dc.firebaseapp.com",
-  projectId: "quizz-418dc",
-  storageBucket: "quizz-418dc.appspot.com",
-  messagingSenderId: "246510279610",
-  appId: "1:246510279610:web:e8bf59828207564f935b83"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);

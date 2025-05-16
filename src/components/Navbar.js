@@ -15,15 +15,19 @@ function Navbar({ onLogout, onNavegar }) {
   };
 
   return (
-    <nav className="navbar">
-      <h2>Quiz App</h2>
-      <div className="nav-links">
-        <button onClick={handleLogout}>Logout</button>
-        <button onClick={() => onNavegar('ranking')}>Ranking</button>
-        <button onClick={() => onNavegar('historico')}>Histórico</button>
-        <button onClick={() => onNavegar('inicio')}>Início</button>
-      </div>
-    </nav>
+<nav className="navbar">
+  <h2>Quiz App</h2>
+  <div className="nav-container">
+    <div className="nav-links">
+      <button onClick={() => onNavegar('inicio')}>Início</button>
+      <button onClick={() => onNavegar('historico')}>Histórico</button>
+      <button onClick={() => onNavegar('ranking')}>Ranking</button>
+    </div>
+    <div className="logout-button">
+      <button onClick={handleLogout}>Logout</button>
+    </div>
+  </div>
+</nav>
   );
 }
 

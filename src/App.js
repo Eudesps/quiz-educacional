@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import questions from './data/questions';
 import Question from './components/Question';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Ranking from './components/Ranking';
-import { salvarPontuacao, buscarTopPontuacoes, salvarHistorico, buscarHistorico } from './firebase';
+import { salvarPontuacao, buscarTopPontuacoes, salvarHistorico, buscarHistorico, auth, signInWithEmailAndPassword } from './firebase';
 import './App.css';
+
+// Função para embaralhar array (Fisher-Yates)
+const shuffleArray = (array) => {
+  let currentIndex = array.length, randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+  return array;
+};
 
 function App() {
   const [usuario, setUsuario] = useState(null);
@@ -18,11 +30,28 @@ function App() {
   const [tela, setTela] = useState('inicio'); // 'inicio', 'quiz', 'ranking', 'historico'
   const [historico, setHistorico] = useState([]); // Novo estado para armazenar o histórico
   const [quizFinalizado, setQuizFinalizado] = useState(false); // Novo estado para controlar se o quiz terminou
+  const [loginError, setLoginError] = useState(null); // Novo estado para armazenar erros de login
+  const [shuffledQuestions, setShuffledQuestions] = useState([]); // Novo estado para as perguntas embaralhadas
+
+  // Função para embaralhar as perguntas e definir o estado
+  const shuffleQuestions = () => {
+    const newShuffledQuestions = shuffleArray(questions);
+    setShuffledQuestions(newShuffledQuestions);
+    setCurrent(0); // Reinicia o índice da pergunta atual
+    setAnswered(false);
+    setSelected(null);
+  };
+
+  useEffect(() => {
+    if (tela === 'quiz') {
+      shuffleQuestions(); // Embaralha as perguntas quando o quiz começa
+    }
+  }, [tela]);
 
   const handleAnswer = (index) => {
     setSelected(index);
     setAnswered(true);
-    const isCorrect = index === questions[current].correct;
+    const isCorrect = index === shuffledQuestions[current].correct;
     if (isCorrect) {
       setScore(score + 1);
     }
@@ -41,7 +70,13 @@ function App() {
   };
 
   const handleLogin = (user) => {
-    setUsuario(user);
+    if (user && user.error) {
+      setLoginError(user.error); // Armazena o erro de login
+      setUsuario(null); // Limpa o usuário em caso de erro
+    } else {
+      setUsuario(user);
+      setLoginError(null); // Limpa o erro se o login for bem-sucedido
+    }
   };
 
   const handleLogout = () => {
@@ -87,7 +122,7 @@ function App() {
   };
 
   if (!usuario) {
-    return <Login onLogin={handleLogin} />;
+    return <Login onLogin={handleLogin} error={loginError} />; // Passa o erro para o componente Login
   }
 
   return (
@@ -104,7 +139,9 @@ function App() {
               {historico.map((jogada, index) => (
                 <li key={index}>
                   {/* Exibe apenas a pontuação e a data */}
-                  <p><strong>Pontuação:</strong> {jogada.pontos} - {jogada.data}</p>
+                  <p>
+                    <strong>Pontuação:</strong> {jogada.pontos} - {jogada.data}
+                  </p>
                 </li>
               ))}
             </ol>
@@ -121,24 +158,30 @@ function App() {
         </div>
       )}
 
-      {tela === 'quiz' && current < questions.length && (
+      {tela === 'quiz' && current < shuffledQuestions.length && (
         <div className="quiz-box">
           <Question
-            questionData={questions[current]}
+            questionData={shuffledQuestions[current]}
             onAnswer={handleAnswer}
             selected={selected}
             answered={answered}
           />
-          <button onClick={next} disabled={!answered}>Próxima</button>
+          <button onClick={next} disabled={!answered}>
+            Próxima
+          </button>
         </div>
       )}
 
-      {tela === 'quiz' && current >= questions.length && (
+      {tela === 'quiz' && current >= shuffledQuestions.length && (
         <div className="result-screen">
           <h2>Quiz finalizado!</h2>
-          <p>Você acertou {score} de {questions.length} perguntas.</p>
+          <p>
+            Você acertou {score} de {shuffledQuestions.length} perguntas.
+          </p>
           <button onClick={() => window.location.reload()}>Recomeçar</button>
-          <button onClick={finalizarQuiz}>Salvar pontuação</button>
+          <button onClick={finalizarQuiz}>
+            Salvar pontuação
+          </button>
         </div>
       )}
     </div>

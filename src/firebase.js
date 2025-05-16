@@ -1,5 +1,4 @@
 //src/firebase.js
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import {
@@ -14,6 +13,7 @@ import {
   updateDoc,
   doc
 } from 'firebase/firestore';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -111,8 +111,8 @@ const buscarHistorico = async (usuario) => {
     );
     const snapshot = await getDocs(q);
     const historicoData = snapshot.docs.map(doc => ({
-        pontos: doc.data().pontos,
-        data: doc.data().data
+      pontos: doc.data().pontos,
+      data: doc.data().data
     }));
     console.log("Histórico de jogadas recuperado para o usuário: ", usuario, historicoData);
     return historicoData;
@@ -122,4 +122,4 @@ const buscarHistorico = async (usuario) => {
   }
 };
 
-export { app, auth, db, salvarPontuacao, buscarTopPontuacoes, salvarHistorico, buscarHistorico };
+export { app, auth, db, salvarPontuacao, buscarTopPontuacoes, salvarHistorico, buscarHistorico, signInWithEmailAndPassword, createUserWithEmailAndPassword };

@@ -1,52 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import questions from './data/questions';
 import Question from './components/Question';
-import Login from './components/Login';
+import Login from './components/Login'; // Importa o componente Login
 import Navbar from './components/Navbar';
 import Ranking from './components/Ranking';
-import { salvarPontuacao, buscarTopPontuacoes, salvarHistorico, buscarHistorico, auth, signInWithEmailAndPassword } from './firebase';
+import { salvarPontuacao, buscarTopPontuacoes, salvarHistorico, buscarHistorico } from './firebase';
 import './App.css';
-
-// Função para embaralhar array (Fisher-Yates)
-const shuffleArray = (array) => {
-  let currentIndex = array.length, randomIndex;
-  while (currentIndex != 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
-  }
-  return array;
-};
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const [usuario, setUsuario] = useState(null);
+  const [usuario, setUsuario] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('usuario') ? JSON.parse(localStorage.getItem('usuario')) : null;
+    }
+    return null;
+  });
+
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(0);
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('showIntro') ? JSON.parse(localStorage.getItem('showIntro')) : true;
+    }
+    return true;
+  });
   const [ranking, setRanking] = useState([]);
-  const [tela, setTela] = useState('inicio'); // 'inicio', 'quiz', 'ranking', 'historico'
-  const [historico, setHistorico] = useState([]); // Novo estado para armazenar o histórico
-  const [quizFinalizado, setQuizFinalizado] = useState(false); // Novo estado para controlar se o quiz terminou
-  const [loginError, setLoginError] = useState(null); // Novo estado para armazenar erros de login
-  const [shuffledQuestions, setShuffledQuestions] = useState([]); // Novo estado para as perguntas embaralhadas
+  const [tela, setTela] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('tela') || 'inicio';
+    }
+    return 'inicio'
+  }); // Persiste a tela atual
+  const [historico, setHistorico] = useState([]);
+  const [shuffledQuestions, setShuffledQuestions] = useState([]);
 
   // Função para embaralhar as perguntas e definir o estado
-  const shuffleQuestions = () => {
-    const newShuffledQuestions = shuffleArray(questions);
-    setShuffledQuestions(newShuffledQuestions);
-    setCurrent(0); // Reinicia o índice da pergunta atual
-    setAnswered(false);
-    setSelected(null);
+  const shuffleArray = (array) => {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+    return array;
   };
+
+  const shuffleQuestions = useCallback(() => {
+      const newShuffledQuestions = shuffleArray(questions);
+      setShuffledQuestions(newShuffledQuestions);
+      setCurrent(0);
+      setAnswered(false);
+      setSelected(null);
+  }, []);
+
 
   useEffect(() => {
     if (tela === 'quiz') {
-      shuffleQuestions(); // Embaralha as perguntas quando o quiz começa
+      shuffleQuestions();
     }
-  }, [tela]);
+  }, [tela, shuffleQuestions]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('tela', tela);
+      localStorage.setItem('showIntro', JSON.stringify(showIntro));
+      if (usuario) {
+        localStorage.setItem('usuario', JSON.stringify(usuario));
+      } else {
+        localStorage.removeItem('usuario');
+      }
+    }
+  }, [tela, showIntro, usuario]);
 
   const handleAnswer = (index) => {
     setSelected(index);
@@ -66,16 +94,13 @@ function App() {
   const startQuiz = () => {
     setShowIntro(false);
     setTela('quiz');
-    setQuizFinalizado(false); // Reinicia o estado ao iniciar o quiz
   };
 
   const handleLogin = (user) => {
-    if (user && user.error) {
-      setLoginError(user.error); // Armazena o erro de login
-      setUsuario(null); // Limpa o usuário em caso de erro
-    } else {
+    if (user) {
       setUsuario(user);
-      setLoginError(null); // Limpa o erro se o login for bem-sucedido
+    } else {
+      setUsuario(null);
     }
   };
 
@@ -85,15 +110,18 @@ function App() {
     setScore(0);
     setShowIntro(true);
     setTela('inicio');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('usuario');
+    }
+
   };
 
   const finalizarQuiz = () => {
     if (usuario) {
       salvarPontuacao(usuario.email, score);
-      salvarHistorico(usuario.email, score); // Salva a pontuação final
+      salvarHistorico(usuario.email, score);
+      toast.success("Pontuação salva com sucesso!");
     }
-    setTela('inicio');
-    setQuizFinalizado(true); // Define o estado para indicar que o quiz terminou
   };
 
   const navegar = async (novaTela) => {
@@ -105,7 +133,6 @@ function App() {
     }
 
     if (novaTela === 'historico') {
-      // Busca o histórico do usuário ao navegar para a tela de histórico
       if (usuario) {
         const historicoData = await buscarHistorico(usuario.email);
         setHistorico(historicoData);
@@ -117,28 +144,28 @@ function App() {
       setShowIntro(true);
       setCurrent(0);
       setScore(0);
-      setQuizFinalizado(false); // Reinicia o estado ao voltar para o início
     }
   };
 
   if (!usuario) {
-    return <Login onLogin={handleLogin} error={loginError} />; // Passa o erro para o componente Login
+    return <Login onLogin={handleLogin} />;
   }
 
   return (
     <div className="App">
+
+      <ToastContainer position="top-center" autoClose={2000} />
       <Navbar onLogout={handleLogout} onNavegar={navegar} />
 
       {tela === 'ranking' && <Ranking rankingData={ranking} />}
 
       {tela === 'historico' && (
         <div className="quiz-box">
-          <h1 className="quiz-title">Histórico de Pontuações</h1> {/* Título atualizado */}
+          <h1 className="quiz-title">Histórico de Pontuações</h1>
           {historico.length > 0 ? (
             <ol>
               {historico.map((jogada, index) => (
                 <li key={index}>
-                  {/* Exibe apenas a pontuação e a data */}
                   <p>
                     <strong>Pontuação:</strong> {jogada.pontos} - {jogada.data}
                   </p>

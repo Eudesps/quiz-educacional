@@ -72,7 +72,7 @@ const Login = ({ onLogin }) => {
         {isLogin ? "Não tem uma conta?" : "Já tem uma conta?"}
         <button
           onClick={() => setIsLogin(!isLogin)}
-          style={{ marginLeft: "8px", color: '#8ecae6', textDecoration: 'underline' }}
+          style={{ marginLeft: "8px", color: '#0f172a', textDecoration: 'underline' }}
         >
           {isLogin ? "Cadastrar" : "Entrar"}
         </button>

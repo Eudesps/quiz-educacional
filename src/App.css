@@ -2,21 +2,20 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #0f172a; /* azul escuro */
+  background-color: #0f172a;
   font-family: sans-serif;
   color: #0f172a;
   height: 100vh;
 }
 
-/* Container principal */
 .App {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Caixas principais centralizadas e mais estreitas */
-.quiz-box {
+/* Estilos das caixas centrais */
+.quiz-box{
   width: 50%;
   max-width: 100%;
   padding: 20px;
@@ -25,35 +24,36 @@ body {
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   text-align: center;
+  color: #a5a5a5;
+}
+.intro-box{  
+  width: 50%;
+  max-width: 100%;
+  padding: 20px;
+  margin: 40px auto;
+  background-color: #1e293b;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  text-align: center;
+  color: #f0f2f4;
+}
+.result-screen {
+  width: 50%;
+  max-width: 100%;
+  padding: 20px;
+  margin: 40px auto;
+  background-color: #1e293b;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  text-align: center;
+  color: #f9fcff;
 }
 
-.intro-box{
-  width: 50%;
-  max-width: 100%;
-  padding: 20px;
-  margin: 40px auto;
-  background-color: #1e293b;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  text-align: center;
-}
-.result-screen{
-  width: 50%;
-  max-width: 100%;
-  padding: 20px;
-  margin: 40px auto;
-  background-color: #1e293b;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  text-align: center;
-  color: #f8fafc ;
-}
 
-/* Título */
 .quiz-title {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #facc15; /* amarelo vibrante */
+  color: #facc15;
 }
 
 /* Botões */
@@ -87,10 +87,9 @@ button:disabled {
 
 .quiz-box li {
   margin: 8px 0;
-  color: #f8fafc;
 }
 
-/* Estilo das alternativas (ajuste no componente Question, se necessário) */
+/* Estilo das perguntas e alternativas */
 .question-text {
   color: #f8fafc;
   font-size: 1.2rem;
@@ -123,4 +122,24 @@ button:disabled {
 .option.incorrect {
   background-color: #ef4444;
   color: #0f172a;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .quiz-box,
+  .intro-box,
+  .result-screen {
+    width: 90%;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .quiz-title {
+    font-size: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+    margin: 8px 0;
+  }
 }

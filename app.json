@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "3f535727-13ba-438a-8c30-0b7fb707e611"
+      }
+    },
+    "android": {
+      "package": "com.eudesps.quizeducacional"
+    }
+  }
+}

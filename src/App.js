@@ -205,7 +205,6 @@ function App() {
           <p>
             Você acertou {score} de {shuffledQuestions.length} perguntas.
           </p>
-          <button onClick={() => window.location.reload()}>Recomeçar</button>
           <button onClick={finalizarQuiz}>
             Salvar pontuação
           </button>

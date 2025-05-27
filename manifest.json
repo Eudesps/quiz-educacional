@@ -9,7 +9,7 @@
 "display":"fullscreen",
 "dir":"auto",
 "lang":"pt-BR",
-"name":"pwa-quizz",
-"short_name":"pwaQuizz",
+"name":"quizz",
+"short_name":"Quizz",
 "start_url":"/quiz-educacional/",
 "scope":"/quiz-educacional/"}

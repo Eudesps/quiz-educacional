@@ -1,6 +1,6 @@
 {
+  "name": "Quizz Educacional",
   "short_name": "Quizz",
-  "name": "quizz",
   "icons": [
     {
       "src": "icon512_maskable.png",
@@ -15,12 +15,8 @@
       "purpose": "any"
     }
   ],
-  "start_url": "/quiz-educacional/",
-  "scope": "/quiz-educacional/",
-  "display": "fullscreen",
-  "orientation": "any",
+  "start_url": ".",
+  "display": "standalone",
   "theme_color": "#e1ccff",
-  "background_color": "#2EC6FE",
-  "lang": "pt-BR",
-  "dir": "auto"
+  "background_color": "#2EC6FE"
 }

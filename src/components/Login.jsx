@@ -1,15 +1,16 @@
 // src/components/Login.js
 import React, { useState } from 'react';
-import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '../firebase';
+import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '../firebase'; // Certifique-se de que estas funções são exportadas de firebase.js
 
-const Login = ({ onLogin }) => {
+function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [isLogin, setIsLogin] = useState(true);
-  const [erro, setErro] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [erro, setErro] = useState(''); 
+  const [loading, setLoading] = useState(false); 
 
   const handleAuth = async () => {
+    setErro(''); 
     setLoading(true);
     try {
       let userCredential;
@@ -20,9 +21,48 @@ const Login = ({ onLogin }) => {
       }
       onLogin(userCredential.user);
     } catch (err) {
-      setErro("Erro ao autenticar: " + err.message);
+      console.error("Erro ao autenticar:", err);
+      let errorMessage = "Erro desconhecido. Tente novamente.";
+
+      // Mapeia os códigos de erro do Firebase para mensagens amigáveis
+      switch (err.code) {
+        case 'auth/invalid-email':
+          errorMessage = "O endereço de e-mail está mal formatado.";
+          break;
+        case 'auth/user-disabled':
+          errorMessage = "Esta conta de usuário foi desativada.";
+          break;
+        case 'auth/user-not-found':
+          errorMessage = "Nenhum usuário encontrado com este e-mail.";
+          break;
+        case 'auth/wrong-password':
+          errorMessage = "A senha está incorreta.";
+          break;
+        case 'auth/email-already-in-use':
+          errorMessage = "Este e-mail já está em uso.";
+          break;
+        case 'auth/weak-password':
+          errorMessage = "A senha deve ter pelo menos 6 caracteres.";
+          break;
+        case 'auth/network-request-failed':
+          errorMessage = "Erro de rede. Verifique sua conexão e tente novamente.";
+          break;
+        case 'auth/invalid-credential': // Novo tratamento de erro
+          errorMessage = "Credenciais inválidas. Verifique seu e-mail e senha.";
+          break;
+        case 'auth/missing-password': // Novo tratamento de erro
+          errorMessage = "A senha não pode estar vazia.";
+          break;
+        case 'auth/operation-not-allowed': // Novo tratamento de erro
+          errorMessage = "Autenticação por e-mail/senha não está habilitada. Contate o suporte.";
+          break;
+        default:
+          errorMessage = "Erro ao autenticar: " + err.message;
+          break;
+      }
+      setErro(errorMessage); 
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
 
@@ -73,13 +113,14 @@ const Login = ({ onLogin }) => {
         <button
           onClick={() => setIsLogin(!isLogin)}
           style={{ marginLeft: "8px", color: '#0f172a', textDecoration: 'underline' }}
+          disabled={loading}
         >
           {isLogin ? "Cadastrar" : "Entrar"}
         </button>
       </p>
-      {erro && <p style={{ color: "red" }}>{erro}</p>}
+      {erro && <p style={{ color: "red", marginTop: "10px" }}>{erro}</p>} {/* Exibe a mensagem de erro */}
     </div>
   );
-};
+}
 
 export default Login;

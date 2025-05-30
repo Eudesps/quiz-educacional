@@ -180,7 +180,7 @@ function App() {
 
       {tela === 'inicio' && showIntro && (
         <div className="intro-box">
-          <h1 className="quiz-title">Quizz</h1>
+          <h1 className="quiz-title">Quiz</h1>
           <button onClick={startQuiz}>Iniciar</button>
         </div>
       )}

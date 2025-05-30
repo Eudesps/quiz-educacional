@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# 🎓 Projeto Quiz Educacional
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Um aplicativo de quiz interativo desenvolvido com **React** e **Firebase**, permitindo que os usuários testem seus conhecimentos, vejam seu desempenho em um ranking e acompanhem seu histórico de jogadas.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## ✨ Funcionalidades
 
-### `npm start`
+### 🔐 Autenticação de Usuário
+- Login e cadastro de novos usuários com e-mail e senha.
+- Tratamento de erros amigáveis (e-mail inválido, senha incorreta, usuário não encontrado etc.).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### ❓ Quiz Dinâmico
+- Perguntas apresentadas em ordem aleatória a cada novo jogo.
+- Feedback imediato sobre as respostas (correta/incorreta).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🏆 Ranking de Pontuações
+- Exibe as melhores pontuações dos usuários.
+- Apenas o melhor resultado de cada usuário é exibido no ranking.
 
-### `npm test`
+### 📊 Histórico de Jogadas
+- Visualização do histórico pessoal de pontuações.
+- Exibe data e hora de cada jogada realizada pelo usuário logado.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🔁 Persistência de Sessão
+- O usuário permanece logado mesmo após recarregar a página.
 
-### `npm run build`
+### 📱 Design Responsivo
+- Interface centralizada e adaptável a diferentes tamanhos de tela.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🛠️ Tecnologias Utilizadas
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 🎨 Frontend
+- [React](https://reactjs.org/)
+- HTML, CSS
 
-### `npm run eject`
+### ☁️ Backend / Banco de Dados
+- [Firebase Authentication](https://firebase.google.com/products/auth) (autenticação de usuários)
+- [Cloud Firestore](https://firebase.google.com/products/firestore) (armazenamento de pontuações e histórico)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📄 Licença
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Este projeto está licenciado sob a [Licença MIT](./LICENSE).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---

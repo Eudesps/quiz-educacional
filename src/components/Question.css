@@ -1,5 +1,5 @@
 .question-container {
-    background-color: white;
+    background-color: #1e293b;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -30,9 +30,9 @@
 }
 
 .correct {
-    background-color: #d4edda !important;
+    background-color: #adf8bd !important;
 }
 
 .wrong {
-    background-color: #f8d7da !important;
+    background-color: #f3c2c6 !important;
 }

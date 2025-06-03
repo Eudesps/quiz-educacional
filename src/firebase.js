@@ -1,4 +1,4 @@
-//src/firebase.js
+// src/firebase.js
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import {
@@ -55,12 +55,14 @@ const salvarPontuacao = async (usuario, pontos) => {
           });
           console.log("Pontuação atualizada para o usuário: ", usuario);
         } else {
-          console.log("Pontuação existente é maior, não atualizando: ", usuario);
+           console.log("Pontuação existente é maior, não atualizando: ", usuario);
         }
       });
     }
   } catch (e) {
     console.error('Erro ao salvar ou atualizar pontuação:', e);
+    console.error("Código do erro:", e.code);
+    console.error("Mensagem do erro:", e.message);
   }
 };
 
@@ -83,21 +85,25 @@ const buscarTopPontuacoes = async () => {
     return data;
   } catch (e) {
     console.error('Erro ao buscar ranking:', e);
+    console.error("Código do erro:", e.code);
+    console.error("Mensagem do erro:", e.message);
     return [];
   }
 };
 
 // Salva o histórico de jogadas do usuário
-const salvarHistorico = async (usuario, pontos) => { // Modificado para receber apenas a pontuação
+const salvarHistorico = async (usuario, pontos) => {
   try {
     await addDoc(collection(db, 'historico'), {
       usuario,
       pontos,
-      data: new Date().toLocaleString(), // Salva a data e hora como string
+      data: new Date(), // CORREÇÃO: Salva a data como um objeto Date nativo
     });
     console.log("Pontuação salva no histórico para o usuário: ", usuario);
   } catch (error) {
     console.error("Erro ao salvar jogada no histórico:", error);
+    console.error("Código do erro:", error.code);
+    console.error("Mensagem do erro:", error.message);
   }
 };
 
@@ -107,17 +113,20 @@ const buscarHistorico = async (usuario) => {
     const q = query(
       collection(db, 'historico'),
       where('usuario', '==', usuario),
-      orderBy('data', 'desc') // Ordena por data decrescente (mais recente primeiro)
+      orderBy('data', 'desc')
     );
     const snapshot = await getDocs(q);
     const historicoData = snapshot.docs.map(doc => ({
       pontos: doc.data().pontos,
-      data: doc.data().data
+      // CORREÇÃO: Converte o Timestamp do Firestore para uma string legível
+      data: doc.data().data ? doc.data().data.toDate().toLocaleString() : 'Data indisponível'
     }));
     console.log("Histórico de jogadas recuperado para o usuário: ", usuario, historicoData);
     return historicoData;
   } catch (error) {
     console.error("Erro ao buscar histórico de jogadas:", error);
+    console.error("Código do erro:", error.code);
+    console.error("Mensagem do erro:", error.message);
     return [];
   }
 };

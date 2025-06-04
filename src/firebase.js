@@ -73,7 +73,7 @@ const buscarTopPontuacoes = async () => {
       collection(db, 'pontuacoes'),
       orderBy('pontos', 'desc'),
       orderBy('data', 'asc'), // Em caso de empate
-      limit(10)
+      limit(100)
     );
     const snapshot = await getDocs(q);
     const data = snapshot.docs.map(doc => ({

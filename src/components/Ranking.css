@@ -1,0 +1,53 @@
+/* Ranking.css */
+
+.ranking-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #0f172a;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.ranking-title {
+  text-align: center;
+  color: #ffffff;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.ranking-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking-list li {
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+  transition: background-color 0.3s;
+}
+
+.ranking-list li:nth-child(1) {
+  background-color: #ffd700;
+  font-weight: bold;
+}
+
+.ranking-list li:nth-child(2) {
+  background-color: #c0c0c0;
+}
+
+.ranking-list li:nth-child(3) {
+  background-color: #cd7f32;
+}
+
+.ranking-list li:hover {
+  background-color: #ececec;
+}

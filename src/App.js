@@ -17,6 +17,8 @@ function App() {
     return null;
   });
 
+  const [salvando, setSalvando] = useState(false);
+  const [botaoDesativado, setBotaoDesativado] = useState(false);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(0);
   const [selected, setSelected] = useState(null);
@@ -116,13 +118,25 @@ function App() {
 
   };
 
-  const finalizarQuiz = () => {
-    if (usuario) {
-      salvarPontuacao(usuario.email, score);
-      salvarHistorico(usuario.email, score);
-      toast.success("Pontuação salva com sucesso!");
-    }
-  };
+const finalizarQuiz = () => {
+  if (usuario) {
+    setSalvando(true); // ⏳ Muda o texto do botão
+
+    salvarPontuacao(usuario.email, score)
+      .then(() => salvarHistorico(usuario.email, score))
+      .then(() => {
+        toast.success("Pontuação salva com sucesso!");
+        setBotaoDesativado(true); // 🔒 Desativa o botão
+      })
+      .catch(() => {
+        toast.error("Erro ao salvar pontuação.");
+      })
+      .finally(() => {
+        setSalvando(false); // ✅ Volta ao normal
+      });
+  }
+};
+
 
   const navegar = async (novaTela) => {
     setTela(novaTela);
@@ -144,6 +158,7 @@ function App() {
       setShowIntro(true);
       setCurrent(0);
       setScore(0);
+      setBotaoDesativado(false);
     }
   };
 
@@ -205,8 +220,8 @@ function App() {
           <p>
             Você acertou {score} de {shuffledQuestions.length} perguntas.
           </p>
-          <button onClick={finalizarQuiz}>
-            Salvar pontuação
+          <button onClick={finalizarQuiz} disabled={botaoDesativado || salvando}>
+            {salvando ? "Salvando..." : "Finalizar Quiz"}
           </button>
         </div>
       )}

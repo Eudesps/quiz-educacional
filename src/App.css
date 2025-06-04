@@ -143,3 +143,30 @@ button:disabled {
     margin: 8px 0;
   }
 }
+
+ol {
+  padding-left: 1.2rem;
+}
+
+ol li {
+  background-color: #f3f4f6;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+ol li:hover {
+  transform: scale(1.02);
+  background-color: #e5e7eb;
+}
+
+ol li p {
+  margin: 0;
+  color: #111827;
+  font-size: 1rem;
+}
+
+ol li strong {
+  color: #1f2937;
+}

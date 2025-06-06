@@ -1,10 +1,12 @@
 // src/components/Navbar.js
-import React from 'react';
+import React, { useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
-import './Navbar.css'; // opcional
+import './Navbar.css';
 
 function Navbar({ onLogout, onNavegar }) {
+  const [menuAberto, setMenuAberto] = useState(false);
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -16,8 +18,17 @@ function Navbar({ onLogout, onNavegar }) {
 
   return (
 <nav className="navbar">
-  <h2>Quiz App</h2>
-  <div className="nav-container">
+  <div className="navbar-header">
+    <h2>Quiz App</h2>
+    <button
+      className="menu-toggle"
+      onClick={() => setMenuAberto(!menuAberto)}
+    >
+      ☰
+    </button>
+  </div>
+
+  <div className={`nav-container ${menuAberto ? 'ativo' : ''}`}>
     <div className="nav-links">
       <button onClick={() => onNavegar('inicio')}>Início</button>
       <button onClick={() => onNavegar('historico')}>Histórico</button>
@@ -28,6 +39,8 @@ function Navbar({ onLogout, onNavegar }) {
     </div>
   </div>
 </nav>
+
+
   );
 }
 

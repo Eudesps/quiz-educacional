@@ -3,25 +3,29 @@
   color: white;
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
   align-items: center;
+  padding: 10px 20px;
   flex-wrap: wrap;
 }
 
+.navbar-header {
+  display: flex;
+  align-items: center;
+}
+
+/* Este container deve ter largura total em telas pequenas e só ocupar o necessário em telas grandes */
 .nav-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-grow: 1;
-  position: relative;
 }
 
 .nav-links {
   display: flex;
   gap: 10px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  flex-direction: row;
+  align-items: center;
 }
 
 .nav-links button {
@@ -63,28 +67,104 @@
   background-color: #d8355d;
 }
 
-/* Responsividade para mobile */
+/* BOTÃO DE MENU - APARECE SÓ EM TELAS PEQUENAS */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: white;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* MOBILE */
 @media (max-width: 768px) {
-  .nav-links {
-    position: static;
-    transform: none;
-    justify-content: center;
-    flex-wrap: wrap;
+  .navbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .navbar-header {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-container {
+    display: none;
+    flex-direction: column;
     width: 100%;
     margin-top: 10px;
   }
 
-  .navbar {
+  .nav-container.ativo {
+    display: flex;
+  }
+
+  .nav-links {
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
+    gap: 8px;
   }
 
   .logout-button {
-    align-self: flex-end;
-    margin-top: 10px;
+    align-self: flex-start;
+    margin-left: 0;
   }
 
-  .nav-links button {
-    flex: 1 1 auto;
+  .nav-links button,
+  .logout-button button {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 769px) {
+  .navbar {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .navbar-header {
+    margin-right: 20px;
+  }
+
+  .nav-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+    margin-top: 0;
+  }
+
+  .nav-links {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: auto;
+    gap: 10px;
+  }
+
+  .logout-button {
+    margin-left: auto;
+    align-self: center;
+  }
+
+  .nav-links button,
+  .logout-button button {
+    width: auto;
+    justify-content: center;
   }
 }

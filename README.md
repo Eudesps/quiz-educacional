@@ -40,8 +40,8 @@ Um aplicativo de quiz interativo desenvolvido com **React** e **Firebase**, perm
 - [Firebase Authentication](https://firebase.google.com/products/auth) (autenticação de usuários)
 - [Cloud Firestore](https://firebase.google.com/products/firestore) (armazenamento de pontuações e histórico)
 
-### Tela inicial
-![Captura de tela 2025-06-06 200330](https://github.com/user-attachments/assets/b443c7a2-9c56-4842-b4e3-af5385185188)
+### Telas
+![Telas](https://github.com/user-attachments/assets/b22220f5-970c-47aa-9a47-90d64063eeb2)
 
 ---
 

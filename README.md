@@ -41,7 +41,7 @@ Um aplicativo de quiz interativo desenvolvido com **React** e **Firebase**, perm
 - [Cloud Firestore](https://firebase.google.com/products/firestore) (armazenamento de pontuações e histórico)
 
 ### Telas
-![Telas](https://github.com/user-attachments/assets/b22220f5-970c-47aa-9a47-90d64063eeb2)
+<img width="8624" height="4256" alt="TELAS-APP-QUIZ" src="https://github.com/user-attachments/assets/1516681e-e3be-4255-a9c8-5b91bf684cf5" />
 
 ---
 

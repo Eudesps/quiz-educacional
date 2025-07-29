@@ -1,0 +1,133 @@
+.intro-box001 {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #0f172a; /* cinza escuro elegante */
+  color: #f9fafb; /* texto branco suave */
+  border-radius: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  animation: fadeIn 0.7s ease;
+}
+
+/* Exemplo de destaque com cores */
+.intro-box001 strong {
+  color: #facc15; /* amarelo vibrante para destaque */
+}
+
+/* Animação de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Container da descrição inicial */
+.intro-description {
+  background-color: #0f172a;
+  border-radius: 12px;
+  color: #f8fafc;
+  font-size: 1.1rem;
+  text-align: left;
+  line-height: 1.6;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Seção de feedback das respostas */
+.feedback-simulacao {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 0.9rem;
+  transform: scale(0.95);
+  width: 100%;
+  max-width: 500px;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Estilo base das opções */
+.option {
+  background-color: #334155;
+  color: #f8fafc;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+  transition: all 0.4s ease;
+  margin: 6px 0;
+
+}
+
+/* Opção correta (geral) */
+.option.correct {
+  background-color: #22c55e;
+  color: #0f172a;
+}
+
+/* Opção incorreta (geral) */
+.option.incorrect {
+  background-color: #030202;
+  color: #f8fafc;
+}
+
+/* Opção animada */
+.option.animated {
+  animation: pulseFlash 0.8s ease-in-out forwards;
+}
+
+/* Correção visual para feedback explícito */
+.feedback-simulacao .option.correct {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.feedback-simulacao .option.incorrect.selected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Animação de feedback */
+@keyframes pulseFlash {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0px transparent;
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0px transparent;
+  }
+}
+
+/* Botões iniciais */
+.intro-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.intro-buttons button {
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+

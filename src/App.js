@@ -4,6 +4,7 @@ import Question from './components/Question';
 import Login from './components/Login'; // Importa o componente Login
 import Navbar from './components/Navbar';
 import Ranking from './components/Ranking';
+import Inicio from './components/Inicio';
 import { salvarPontuacao, buscarTopPontuacoes, salvarHistorico, buscarHistorico } from './firebase';
 import './App.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -120,19 +121,19 @@ function App() {
 
 const finalizarQuiz = () => {
   if (usuario) {
-    setSalvando(true); // ⏳ Muda o texto do botão
+    setSalvando(true);
 
     salvarPontuacao(usuario.email, score)
       .then(() => salvarHistorico(usuario.email, score))
       .then(() => {
         toast.success("Pontuação salva com sucesso!");
-        setBotaoDesativado(true); // 🔒 Desativa o botão
+        setBotaoDesativado(true);
       })
       .catch(() => {
         toast.error("Erro ao salvar pontuação.");
       })
       .finally(() => {
-        setSalvando(false); // ✅ Volta ao normal
+        setSalvando(false);
       });
   }
 };
@@ -194,11 +195,9 @@ const finalizarQuiz = () => {
       )}
 
       {tela === 'inicio' && showIntro && (
-        <div className="intro-box">
-          <h1 className="quiz-title">Quiz</h1>
-          <button onClick={startQuiz}>Iniciar</button>
-        </div>
+        <Inicio onStart={startQuiz} />
       )}
+
 
       {tela === 'quiz' && current < shuffledQuestions.length && (
         <div className="quiz-box">

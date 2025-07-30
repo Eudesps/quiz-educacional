@@ -1,6 +1,8 @@
 # 🎓 Projeto Quiz Educacional
 
-Um aplicativo de quiz interativo desenvolvido com **React** e **Firebase**, permitindo que os usuários testem seus conhecimentos, vejam seu desempenho em um ranking e acompanhem seu histórico de jogadas.
+Um aplicativo de quiz interativo desenvolvido com React e Firebase, que permite aos usuários testarem seus conhecimentos, visualizarem seu desempenho em um ranking e acompanharem seu histórico de jogadas.
+
+Este projeto foi idealizado como uma **ferramenta de apoio à aprendizagem**, podendo ser utilizado em ambientes educacionais, como salas de aula, para tornar o processo de ensino mais **dinâmico, motivador e gamificado**. O feedback imediato após cada questão e a visualização da pontuação e do ranking incentivam a participação ativa dos alunos, promovendo **engajamento e aprendizado contínuo**.
 
 ---
 

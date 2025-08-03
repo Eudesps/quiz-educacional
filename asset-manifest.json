@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/quiz-educacional/static/css/main.5dcbc511.css",
-    "main.js": "/quiz-educacional/static/js/main.31aaf30f.js",
+    "main.js": "/quiz-educacional/static/js/main.d6abc112.js",
     "static/js/453.1c6c8682.chunk.js": "/quiz-educacional/static/js/453.1c6c8682.chunk.js",
     "index.html": "/quiz-educacional/index.html",
     "main.5dcbc511.css.map": "/quiz-educacional/static/css/main.5dcbc511.css.map",
-    "main.31aaf30f.js.map": "/quiz-educacional/static/js/main.31aaf30f.js.map",
+    "main.d6abc112.js.map": "/quiz-educacional/static/js/main.d6abc112.js.map",
     "453.1c6c8682.chunk.js.map": "/quiz-educacional/static/js/453.1c6c8682.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5dcbc511.css",
-    "static/js/main.31aaf30f.js"
+    "static/js/main.d6abc112.js"
   ]
 }

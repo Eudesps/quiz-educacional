@@ -12,7 +12,7 @@ export default function Inicio({ onStart }) {
         </p>
         <p>
           Ao final das questões, você verá sua <strong>pontuação final</strong> e será incluído em um <strong>ranking</strong> com outros participantes.
-          Cada resposta gera <strong>feedback imediato</strong>, como no exemplo abaixo (exemplo caso a resposta esteja errada):
+          Cada resposta gera <strong>feedback imediato</strong>, como no exemplo abaixo (exemplo caso a resposta esteja errada)oxente:
         </p>
 
         <div className="feedback-simulacao">
